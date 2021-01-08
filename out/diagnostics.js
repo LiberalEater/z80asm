@@ -45,7 +45,7 @@ class diagnosticProvider {
                      }
               }
               collection.symarray = array
-              if (vscode.workspace.getConfiguration().get("ez80-asm.diagnosticProvider")) {
+              if (vscode.workspace.getConfiguration().get("z80-asm.diagnosticProvider")) {
                      collection.set(document.uri, table.fullArray)
               }
        }
@@ -117,7 +117,7 @@ class diagnosticProvider {
                      }
               }
               collection.array = diagnosticsArray
-              if (vscode.workspace.getConfiguration().get("ez80-asm.diagnosticProvider")) {
+              if (vscode.workspace.getConfiguration().get("z80-asm.diagnosticProvider")) {
                      collection.set(document.uri, table.fullArray)
               }
        }
@@ -178,7 +178,7 @@ class diagnosticProvider {
                                    }
                                    if (!diagwordmatch[0].match(opcodeRegex)) {        // if the opcode isn't valid
                                           const range = new vscode.Range(lineNumber, startChar, lineNumber, endChar)
-                                          diagnosticsArray.push(new vscode.Diagnostic(range, "Unknown ez80 opcode"));
+                                          diagnosticsArray.push(new vscode.Diagnostic(range, "Unknown z80 opcode"));
                                           return diagnosticsArray;
                                    } else if (diagwordmatch[0].match(noOperandOpcodeRegex)) { // if the opcode doesn't use an operand
                                           if (diagwordmatch.length > 1) {     
@@ -257,7 +257,7 @@ class diagnosticProvider {
               if (this.instructionItemsFull.indexOf(line) != -1) {
                      return false
               }
-              let test = line.replace(/\bvalid\b/g, "mmn")
+              let test = line.replace(/\bvalid\b/g, "mn")
               if (this.instructionItemsFull.indexOf(test) != -1) {
                      return false
               }

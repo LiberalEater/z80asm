@@ -65,7 +65,7 @@ class DocumentTable {
 class symbolDocumenter {
        constructor() {
               this.documents = {}
-              this.extensionPath = (vscode.extensions.getExtension("alex-parker.ez80-asm")).extensionPath;
+              this.extensionPath = (vscode.extensions.getExtension("alex-parker.z80-asm")).extensionPath;
               this.cacheFolder = path.join(this.extensionPath, "/caches")
        }
        /**

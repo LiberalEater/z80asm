@@ -1,5 +1,5 @@
-## EZ80 and Z80 Assembly for Visual Studio Code
-The (E)Z80 Assembly extension for Visual Studio provides language support for EZ80 and Z80 Assembly, including:
+## Z80 Assembly for Visual Studio Code
+The (E)Z80 Assembly extension for Visual Studio provides language support for Z80 Assembly, including:
 
 ### Syntax Highlighting
 * Labels
@@ -14,7 +14,7 @@ The (E)Z80 Assembly extension for Visual Studio provides language support for EZ
 * Option to toggle case-sensitivity
 
 ### Intellisense Suggestions
-* Start typing and get suggestions based on included symbols and documented ez80 snippets
+* Start typing and get suggestions based on included symbols and documented z80 snippets
 * Snippet documentation includes flags, bytes, and cycles
 * Snippets can be toggled in settings and there are many settings regarding casing of inserted snippets
 
@@ -29,7 +29,7 @@ The (E)Z80 Assembly extension for Visual Studio provides language support for EZ
 * Make sure you have semantic highlighting on in settings
 
 ### Diagnostic Provider
-* Note that these diagnostics are specific to the ez80 CPU
+* Note that these diagnostics are specific to the z80 CPU and spasm-ng assembler
 * Error checking while you type
 * Can be disabled in settings
 * Can check for duplicate declarations in a document (but not included files)
@@ -40,5 +40,5 @@ The (E)Z80 Assembly extension for Visual Studio provides language support for EZ
 * If the declaration is in a .inc file, you have to rename in that file to prevent accidental renaming
 
 ### License
-This project is subject to [these terms](https://github.com/LiberalEater/ez80asm/blob/main/LICENSE.txt).
+This project is subject to [these terms](https://github.com/LiberalEater/z80asm/blob/main/LICENSE.txt).
 

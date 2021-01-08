@@ -1,10 +1,10 @@
 {
-	"name": "ez80-asm",
-	"displayName": "EZ80 Assembly",
-	"description": "EZ80 and Z80 Assembly syntax highlighting for Visual Studio Code",
+	"name": "z80-asm",
+	"displayName": "Z80 Assembly",
+	"description": "Z80 Assembly syntax highlighting for Visual Studio Code",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/LiberalEater/ez80asm.git"
+		"url": "https://github.com/LiberalEater/z80asm.git"
 	},
 	"icon": "logo.png",
 	"version": "1.4.2",
@@ -15,8 +15,8 @@
 		"vscode": "^1.0.0"
 	},
 	"activationEvents": [
-		"onLanguage:ez80-asm",
-		"workspaceContains:**/*.{ez80,z80}"
+		"onLanguage:z80-asm",
+		"workspaceContains:**/*.{z80}"
 	],
 	"main": "./out/extension.js",
 	"categories": [
@@ -24,39 +24,35 @@
 	],
 	"keywords": [
 		"assembly",
-		"z80",
-		"ez80",
-		"game boy"
+		"z80"
 	],
 	"contributes": {
 		"languages": [
 			{
-				"id": "ez80-asm",
+				"id": "z80-asm",
 				"aliases": [
-					"EZ80 Assembly"
+					"Z80 Assembly"
 				],
 				"extensions": [
-					".asm",
 					".z80",
-					".ez80",
 					".inc"
 				],
-				"configuration": "./ez80-asm.language-configuration.json"
+				"configuration": "./z80-asm.language-configuration.json"
 			}
 		],
 		"grammars": [
 			{
-				"language": "ez80-asm",
-				"scopeName": "source.ez80",
-				"path": "./syntaxes/ez80-asm.tmLanguage"
+				"language": "z80-asm",
+				"scopeName": "source.z80",
+				"path": "./syntaxes/z80-asm.tmLanguage"
 			}
 		],
 		"configuration": [
 			{
 				"type": "object",
-				"title": "EZ80 Assembly",
+				"title": "Z80 Assembly",
 				"properties": {
-					"ez80-asm.includePath": {
+					"z80-asm.includePath": {
 						"description": "Specifies folder paths to search for include files.",
 						"type": [
 							"array",
@@ -64,23 +60,23 @@
 						],
 						"default": []
 					},
-					"ez80-asm.enableSnippetSuggestions": {
+					"z80-asm.enableSnippetSuggestions": {
 						"description": "Enable Instruction Snippets suggestions",
 						"type": "boolean",
 						"default": true
 					},
-					"ez80-asm.caseSnippets": {
+					"z80-asm.caseSnippets": {
 						"description": "Choose what case you want snippets to be",
 						"type": "string",
 						"default": "lower case",
 						"enum": ["UPPER CASE", "lower case"]
 					},
-					"ez80-asm.insertTabBetweenMnemonicsAndOperands": {
+					"z80-asm.insertTabBetweenMnemonicsAndOperands": {
 						"description": "Choose if you want snippets to insert a tab between Mnemonics and operands",
 						"type": "boolean",
 						"default": false
 					},
-					"ez80-asm.alwaysUppercaseStrings": {
+					"z80-asm.alwaysUppercaseStrings": {
 						"description": "Specific strings you want always capitalized",
 						"type": [
 							"array",
@@ -88,7 +84,7 @@
 						],
 						"default": []
 					},
-					"ez80-asm.alwaysLowercaseStrings": {
+					"z80-asm.alwaysLowercaseStrings": {
 						"description": "Specific strings you want always lowercased",
 						"type": [
 							"array",
@@ -96,12 +92,12 @@
 						],
 						"default": []
 					},
-					"ez80-asm.diagnosticProvider": {
+					"z80-asm.diagnosticProvider": {
 						"description": "Highlight errors while you type",
 						"type": "boolean",
 						"default": true
 					},
-					"ez80-asm.caseInsensitive": {
+					"z80-asm.caseInsensitive": {
 						"description": "Leaved checked if you would like symbols to be case-insensitive (most assemblers are case-insensitive)",
 						"type": "boolean",
 						"default": true

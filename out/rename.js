@@ -25,7 +25,7 @@ class renameProvider {
               const range = document.getWordRangeAtPosition(position, /([_A-Za-z\.][\w\.]*)/g);
               const existingSymbol = this.symbolDocumenter.checkSymbol(newName, document.uri)
               if (existingSymbol) {
-                     if (vscode.workspace.getConfiguration().get("ez80-asm.caseInsensitive")) {
+                     if (vscode.workspace.getConfiguration().get("z80-asm.caseInsensitive")) {
                             if (newName.toLowerCase() === existingSymbol.name.toLowerCase()) {
                                    vscode.window.showWarningMessage("There is already a symbol with this name")
                                    return new vscode.WorkspaceEdit()
@@ -71,7 +71,7 @@ class renameProvider {
               let length = table.possibleRefs.length
               for (let i = 0; i < length; i++) {
                      let match = false
-                     if (vscode.workspace.getConfiguration().get("ez80-asm.caseInsensitive")) {
+                     if (vscode.workspace.getConfiguration().get("z80-asm.caseInsensitive")) {
                             match = table.possibleRefs[i].text.toLowerCase() === oldName.toLowerCase()
                      } else {
                             match = table.possibleRefs[i].text === oldName
