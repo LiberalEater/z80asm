@@ -14,7 +14,7 @@ class ASMCompletionProposer {
         this.symbolDocumenter = symbolDocumenter;
         this.instructionItems = [];
         this.instructionItemsNonForm = [];
-        const extension = vscode.extensions.getExtension("alex-parker.ez80-asm");
+        const extension = vscode.extensions.getExtension("alex-parker.z80-asm");
         const instructionsJSONPath = path.join(extension.extensionPath, "instructions.json");
         const instructionsJSON = JSON.parse(fs.readFileSync(instructionsJSONPath, "utf8"));
         const instructions = instructionsJSON["instructions"];
@@ -23,11 +23,11 @@ class ASMCompletionProposer {
             for (let index = 0; index < output.length; index++) {
                 const entry = output[index]
                 output.splice(index, 1);
-                if (vscode.workspace.getConfiguration().get("ez80-asm.insertTab")) {
+                if (vscode.workspace.getConfiguration().get("z80-asm.insertTab")) {
                     output.push({
                         "name": entry.name.replace(" ", "\t"),
                         "description": entry.description,
-                        "cycles": entry.cycles,
+                        "tstates": entry.tstates,
                         "bytes": entry.bytes,
                         "flags": {
                             "z": entry.flags.z || "",
@@ -41,7 +41,7 @@ class ASMCompletionProposer {
                     output.push({
                         "name": entry.name,
                         "description": entry.description,
-                        "cycles": entry.cycles,
+                        "tstates": entry.tstates,
                         "bytes": entry.bytes,
                         "flags": {
                             "z": entry.flags.z || "",
@@ -72,10 +72,10 @@ class ASMCompletionProposer {
                         runningList.push(name.replace("r8", "e"));
                         runningList.push(name.replace("r8", "h"));
                         runningList.push(name.replace("r8", "l"));
-                    } else if (name.includes("r24")) {
-                        runningList.push(name.replace("r24", "bc"));
-                        runningList.push(name.replace("r24", "de"));
-                        runningList.push(name.replace("r24", "hl"));
+                    } else if (name.includes("r16")) {
+                        runningList.push(name.replace("r16", "bc"));
+                        runningList.push(name.replace("r16", "de"));
+                        runningList.push(name.replace("r16", "hl"));
                     } else if (name.includes(" ir")) {
                         runningList.push(name.replace("ir", "ixh"));
                         runningList.push(name.replace("ir", "ixl"));
@@ -112,21 +112,21 @@ class ASMCompletionProposer {
                     }
                     return runningList;
                 }
-                if (vscode.workspace.getConfiguration().get("ez80-asm.caseSnippets").includes("UPPER")) {
+                if (vscode.workspace.getConfiguration().get("z80-asm.caseSnippets").includes("UPPER")) {
                     element.name = element.name.toUpperCase();
-                } else if (vscode.workspace.getConfiguration().get("ez80-asm.caseSnippets").includes("lower")) {
+                } else if (vscode.workspace.getConfiguration().get("z80-asm.caseSnippets").includes("lower")) {
                     element.name = element.name.toLowerCase();
                 }
-                if (vscode.workspace.getConfiguration().get("ez80-asm.insertTabBetweenMnemonicsAndOperands")) {
+                if (vscode.workspace.getConfiguration().get("z80-asm.insertTabBetweenMnemonicsAndOperands")) {
                     element.name = element.name.replace(" ", "\t");
                 }
-                const casingUpper = vscode.workspace.getConfiguration().get("ez80-asm.alwaysUppercaseStrings");
+                const casingUpper = vscode.workspace.getConfiguration().get("z80-asm.alwaysUppercaseStrings");
                 for (let i = 0; i < casingUpper.length; ++i) {
                     if (element.name.includes(casingUpper[i])) {
                         element.name = element.name.replace(casingUpper[i], casingUpper[i].toUpperCase());
                     }
                 }
-                const casingLower = vscode.workspace.getConfiguration().get("ez80-asm.alwaysLowercaseStrings");
+                const casingLower = vscode.workspace.getConfiguration().get("z80-asm.alwaysLowercaseStrings");
                 for (let i = 0; i < casingLower.length; ++i) {
                     if (element.name.includes(casingLower[i])) {
                         element.name = element.name.replace(casingLower[i], casingLower[i].toLowerCase());
@@ -135,7 +135,7 @@ class ASMCompletionProposer {
 
                 const item = new vscode.CompletionItem(element.name, vscode.CompletionItemKind.Snippet);
                 const descriptionLine = element.description;
-                const cyclesLine = `**Cycles:** ${element.cycles} **Bytes:** ${element.bytes}`;
+                const cyclesLine = `**T-states:** ${element.tstates} **Bytes:** ${element.bytes}`;
                 const flagsLine = `**Flags:**`;
                 const flagLines = [];
                 if ((element.flags.z || "").length > 0) {
@@ -164,7 +164,7 @@ class ASMCompletionProposer {
                 let insertText = element.name;
                 let tabIndex = 1;
                 insertText = insertText.replace("$", "\\$");
-                insertText = insertText.replace(/\b(r8|R8|r24|R24|n|N|mmn|MMN|ir|IR|ix\/y|IX\/Y|d|D|rxy|RXY|bit|BIT|cc|CC)\b/g, (substring) => {
+                insertText = insertText.replace(/\b(r8|r16|n|mn|ir|ix\/y|d|rxy|bit|cc)\b/gi, (substring) => {
                     return `\${${tabIndex++}:${substring}}`;
                 });
                 // If there's only one completion item, set index to 0 for a better
@@ -192,7 +192,7 @@ class ASMCompletionProposer {
         const line = document.lineAt(position.line)
         const symbols = this.symbolDocumenter.getAvailableSymbols(document.uri);
         const range = document.getWordRangeAtPosition(position, regRegex)
-        if (line.text.match(/^\s+\w*$/) && vscode.workspace.getConfiguration().get("ez80-asm.enableSnippetSuggestions")) {
+        if (line.text.match(/^\s+\w*$/) && vscode.workspace.getConfiguration().get("z80-asm.enableSnippetSuggestions")) {
             this.instructionItems.forEach((item) => {
                 output.push(item);
             })

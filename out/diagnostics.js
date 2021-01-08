@@ -10,9 +10,8 @@ const numberRegex = /((\$|0x)[0-9a-fA-F]+\b)|(\b[0-9a-fA-F]+h\b)|(%[01]+\b)|(\b[
 const firstoperandregex = /^\s*[\w\.]+\s+([^\,\r\n\f\v]+)/
 const secondoperandregex = /^.*?,\s*(.*)/
 const nonCommentRegex = /^([^;]+[^\,\r\n\t\f\v ;])/g
-const opcodeRegex = /\b(ADC|ADD|CP|DAA|DEC|INC|MLT|NEG|SBC|SUB|BIT|RES|SET|CPD|CPDR|CPI|CPIR|LDD|LDDR|LDI|LDIR|EX|EXX|IN|IN0|IND|INDR|INDRX|IND2|IND2R|INDM|INDMR|INI|INIR|INIRX|INI2|INI2R|INIM|INIMR|OTDM|OTDMR|OTDRX|OTIM|OTIMR|OTIRX|OUT|OUT0|OUTD|OTDR|OUTD2|OTD2R|OUTI|OTIR|OUTI2|OTI2R|TSTIO|LD|LEA|PEA|POP|PUSH|AND|CPL|OR|TST|XOR|CCF|DI|EI|HALT|IM|NOP|RSMIX|SCF|SLP|STMIX|CALL|DJNZ|JP|JR|RET|RETI|RETN|RST|RL|RLA|RLC|RLCA|RLD|RR|RRA|RRC|RRCA|RRD|SLA|SRA|SRL)\b/i;
-const noOperandOpcodeRegex = /\b(DAA|NEG|CPD|CPDR|CPI|CPIR|LDD|LDDR|LDI|LDIR|EXX|IND|INDR|INDRX|IND2|IND2R|INDM|INDMR|INI|INIR|INIRX|INI2|INI2R|INIM|INIMR|OTDM|OTDMR|OTDRX|OTIM|OTIMR|OTIRX|OUTD|OTDR|OUTD2|OTD2R|OUTI|OTIR|OUTI2|OTI2R|CCF|DI|EI|HALT|NOP|RSMIX|SCF|SLP|STMIX|RETI|RETN|RLA|RLCA|RRA|RRCA|RRD)\b/i;
-const suffixRegex = /(\.)(LIL|LIS|SIL|SIS|L|S)\b/i;
+const opcodeRegex = /\b(ADC|ADD|AND|BIT|CALL|CCF|CP|CPD|CPDR|CPI|CPIR|CPL|DAA|DEC|DI|DJNZ|EI|EX|EXX|HALT|IM|IN|INC|IND|INDR|INI|INIR|JP|JR|LD|LDD|LDDR|LDI|LDIR|NEG|NOP|OR|OTDR|OTIR|OUT|OUTD|OUTI|POP|PUSH|RES|RET|RETI|RETN|RL|RLA|RLC|RLCA|RLD|RR|RRA|RRC|RRCA|RRD|RST|SBC|SCF|SET|SLA|SRA|SRL|SUB|XOR)\b/i;
+const noOperandOpcodeRegex = /\b(DAA|NEG|CPD|CPDR|CPI|CPIR|LDD|LDDR|LDI|LDIR|EXX|IND|INDR|INI|INIR|OUTD|OTDR|OUTI|OTIR|CCF|DI|EI|HALT|NOP|SCF|RETI|RETN|RLA|RLCA|RRA|RRCA|RRD)\b/i;
 const todoRegex = /.*;\s*todo\b:?\s*(.*)/i
 
 /**
@@ -45,7 +44,7 @@ class diagnosticProvider {
                      }
               }
               collection.symarray = array
-              if (vscode.workspace.getConfiguration().get("ez80-asm.diagnosticProvider")) {
+              if (vscode.workspace.getConfiguration().get("z80-asm.diagnosticProvider")) {
                      collection.set(document.uri, table.fullArray)
               }
        }
@@ -117,7 +116,7 @@ class diagnosticProvider {
                      }
               }
               collection.array = diagnosticsArray
-              if (vscode.workspace.getConfiguration().get("ez80-asm.diagnosticProvider")) {
+              if (vscode.workspace.getConfiguration().get("z80-asm.diagnosticProvider")) {
                      collection.set(document.uri, table.fullArray)
               }
        }
@@ -170,15 +169,9 @@ class diagnosticProvider {
                             if (!diagline.match(/^\s*(\#|\.|db|dw|dl)/gi)) {      // check the opcode
                                    const startChar = text.indexOf(diagwordmatch[0])
                                    const endChar = startChar + diagwordmatch[0].length
-                                   if (diagwordmatch[0].indexOf(".") != -1 && !diagwordmatch[0].match(suffixRegex)) {       // if the suffix isn't valid
-                                          const range = new vscode.Range(lineNumber, startChar, lineNumber, endChar)
-                                          diagnosticsArray.push(new vscode.Diagnostic(range, "Bad suffix"));
-                                   } else if (diagwordmatch[0].indexOf(".") != -1) {
-                                          diagline = diagline.replace(/\.\w+/, "")  // remove the suffix from the test line if it's valid
-                                   }
                                    if (!diagwordmatch[0].match(opcodeRegex)) {        // if the opcode isn't valid
                                           const range = new vscode.Range(lineNumber, startChar, lineNumber, endChar)
-                                          diagnosticsArray.push(new vscode.Diagnostic(range, "Unknown ez80 opcode"));
+                                          diagnosticsArray.push(new vscode.Diagnostic(range, "Unknown z80 opcode"));
                                           return diagnosticsArray;
                                    } else if (diagwordmatch[0].match(noOperandOpcodeRegex)) { // if the opcode doesn't use an operand
                                           if (diagwordmatch.length > 1) {     
@@ -257,7 +250,7 @@ class diagnosticProvider {
               if (this.instructionItemsFull.indexOf(line) != -1) {
                      return false
               }
-              let test = line.replace(/\bvalid\b/g, "mmn")
+              let test = line.replace(/\bvalid\b/g, "mn")
               if (this.instructionItemsFull.indexOf(test) != -1) {
                      return false
               }

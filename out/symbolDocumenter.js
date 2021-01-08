@@ -65,7 +65,7 @@ class DocumentTable {
 class symbolDocumenter {
        constructor() {
               this.documents = {}
-              this.extensionPath = (vscode.extensions.getExtension("alex-parker.ez80-asm")).extensionPath;
+              this.extensionPath = (vscode.extensions.getExtension("alex-parker.z80-asm")).extensionPath;
               this.cacheFolder = path.join(this.extensionPath, "/caches")
        }
        /**
@@ -319,7 +319,7 @@ class symbolDocumenter {
                      return simpleJoin;
               }
               // Grab the configured include paths. If it's a string, make it an array.
-              var includePathConfiguration = vscode.workspace.getConfiguration().get("ez80-asm.includePath");
+              var includePathConfiguration = vscode.workspace.getConfiguration().get("z80-asm.includePath");
               if (typeof includePathConfiguration === "string") {
                      includePathConfiguration = [includePathConfiguration];
               }
@@ -431,7 +431,7 @@ class symbolDocumenter {
               if (!symbols) {
                      symbols = this.getAvailableSymbols(uri)
               }
-              if (vscode.workspace.getConfiguration().get("ez80-asm.caseInsensitive")) {
+              if (vscode.workspace.getConfiguration().get("z80-asm.caseInsensitive")) {
                      return symbols[Object.keys(symbols).find(key => key.toLowerCase() === name.toLowerCase())]
               } else {
                      return symbols[name]

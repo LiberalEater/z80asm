@@ -1,3 +1,9 @@
+## 1.4.3
+* "Fork" of EZ80 assembly extension starts here
+
+## 1.4.2
+* More fixes
+
 ## 1.4.1
 * Minor fix when getting symbol names
 

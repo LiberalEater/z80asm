@@ -45,7 +45,7 @@ class referenceProvider {
               searched.push(docPath)
               for (let i = 0; i < table.possibleRefs.length; i++) {
                      let match = false
-                     if (vscode.workspace.getConfiguration().get("ez80-asm.caseInsensitive")) {
+                     if (vscode.workspace.getConfiguration().get("z80-asm.caseInsensitive")) {
                             match = table.possibleRefs[i].text.toLowerCase() === name.toLowerCase()
                      } else {
                             match = table.possibleRefs[i].text === name
